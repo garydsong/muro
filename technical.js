@@ -56,23 +56,26 @@ function activatedDateParser(users, active) {
     let total = 0;
 
     for (let i = 0; i < users.length; i++) {
+        if (!users[i].activatedOn) return 0.00
         if (!users[i].deactivatedOn) {
             const customerActivationDate = users[i].activatedOn;
             const timeDifference = currentDate - customerActivationDate;
+
             const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
             const monthsDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24 * 30));
+
             total += active.ratePerMonth * (daysDifference / (30 * monthsDifference));
         } else {
             const customerActivationDate = users[i].activatedOn;
             const customerDeactivationDate = users[i].deactivatedOn;
+
             const timeDifference = customerDeactivationDate - customerActivationDate;
             const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
             const monthsDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24 * 30));
+
             total += active.ratePerMonth * (daysDifference / (30 * monthsDifference));
         }
-
     }
-
     return total.toFixed(2)
 }
 
