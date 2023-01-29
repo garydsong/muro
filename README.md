@@ -92,7 +92,7 @@ const activatedUser3 = {
 }
 ```
 
-The code defines a function 'activatedDateParser' taking in the two arguments of 'users' and 'active' expecting the said array and object. We establish a current date variable seeing as we are checking up to our current date (given they do not have a deactivated date). Trivially, we loop over the users array to access each activation date. If the [i]th user does not have an activatedOn date OR a ratePerMonth, we return '0.00'. If there is no deactivation date we know that these are currently active accounts and we can caluclate the difference between these two in milliseconds, which is then divided by the number of milliseconds in a day to get the number of days, and divided by the number of milliseconds in a month. 
+The code defines a function 'activatedDateParser' taking in the two arguments of 'users' and 'active' expecting the said array and object. We establish a current date variable seeing as we are checking up to our current date (given they do not have a deactivated date). Trivially, we loop over the users array to access each activation date. If the [i]th user does not have an activatedOn date OR a ratePerMonth, we return '0.00'. If there is no deactivation date we know that these are currently active accounts and we can caluclate the difference between these two in milliseconds, which is then divided by the number of milliseconds in a day to get the number of days, and divided by the number of milliseconds in a month. The rate per month is specified by the 'active' object argument. By trivially keying into the object's value via 'active.ratePerMonth' we can dynamically get the monthly rate. We now can add to the total amount owed and calculate it by multiplying the rate per month by the ratio of days to months. Return the total invoking the '.toFixed(2)' function to display only 2 decimals.
 
 ```
 function activatedDateParser(users, active) {
@@ -122,4 +122,12 @@ function activatedDateParser(users, active) {
     }
     return total.toFixed(2)
 }
+```
+
+These are the test cases I've run:
+
+```
+console.log(activatedDateParser(users, activatedUser)) // 7.91
+console.log(activatedDateParser(users2, activatedUser2)) // 14.65
+console.log(activatedDateParser(users3, activatedUser3)) // 0.00
 ```
