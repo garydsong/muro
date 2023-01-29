@@ -37,7 +37,16 @@ const users2 = [
         activatedOn: new Date('June 23, 2009'),
         deactivatedOn: new Date('October 17, 2018')
     }
+]
 
+const users3 = [
+    {
+        id: 1,
+        name: "user1",
+        customer_id: 3,
+        activatedOn: null,
+        deactivatedOn: null
+    }
 ]
 
 const activatedUser = {
@@ -50,13 +59,18 @@ const activatedUser2 = {
     ratePerMonth: 5
 }
 
+const activatedUser3 = {
+    id: 3,
+    ratePerMonth: null
+}
+
 
 function activatedDateParser(users, active) {
     const currentDate = new Date();
     let total = 0;
 
     for (let i = 0; i < users.length; i++) {
-        if (!users[i].activatedOn) return 0.00
+        if (!users[i].activatedOn || !active.ratePerMonth) return '0.00'
         if (!users[i].deactivatedOn) {
             const customerActivationDate = users[i].activatedOn;
             const timeDifference = currentDate - customerActivationDate;
@@ -81,3 +95,4 @@ function activatedDateParser(users, active) {
 
 console.log(activatedDateParser(users, activatedUser)) // 7.91
 console.log(activatedDateParser(users2, activatedUser2)) // 14.65
+console.log(activatedDateParser(users3, activatedUser3)) // 0.00
